@@ -1,0 +1,32 @@
+---
+
+- hosts: all
+  become: yes
+  tasks:
+
+  - name: Update repo for ubuntu
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+ 
+#  - name: Update repo for centos
+#    dnf:
+#      update_only: yes
+#      update_cache: yes
+#    when: ansible_distribution == "CentOS"
+
+  - name: Install apache for Ubuntu
+    apt:
+      name:
+        - apache2
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Install Apache for CentOS server
+    dnf:
+      name:
+        - httpd
+      state: latest
+    when: ansible_distribution == "CentOS"
+
